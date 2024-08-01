@@ -1,139 +1,98 @@
-#include "deque.h"
+#include <stdio.h>
 #include <stdlib.h>
-typedef void *dataType;
+#include "deque.h"
 
-struct Deque
-{
-
-    dataType *data;
+struct Deque {
+    dataType *arr;
     int start;
     int end;
     int size;
     int allocated;
 };
 
-Deque *dequeConstruct()
-{
+Deque *dequeConstruct() {
+    Deque *f = (Deque *)calloc(1, sizeof(Deque));
+    f->arr = (dataType *)calloc(1, sizeof(dataType));
+    f->start = 0;
+    f->end = 0;
+    f->size = 0;
+    f->allocated = 1;
 
-    Deque *deque = (Deque *)calloc(1, sizeof(Deque));
-    deque->data = (dataType *)calloc(1, sizeof(dataType));
-
-    deque->allocated = 1;
-
-    return deque;
+    return f;
 }
 
-void dequePushBack(Deque *f, dataType item)
-{
-
-    int idx_source;
-    int idx_dest;
-
-    if (f->size >= f->allocated)
-    {
+void dequePushBack(Deque *f, dataType item) {
+    if (f->size >= f->allocated) {
         f->allocated *= 2;
 
-        dataType *new_data = (dataType *)malloc(f->allocated * sizeof(dataType));
+        dataType *newArray = (dataType *)malloc(f->allocated * sizeof(dataType));
 
-        for (int i = 0; i < f->size; i++)
-        {
-            idx_source = (f->start + i) % f->size;
-            idx_dest = i;
-
-            new_data[idx_dest] = f->data[idx_source];
+        for (int i = 0; i < f->size; i++) {
+            int idx = (f->start + i) % f->size;
+            newArray[i] = f->arr[idx];
         }
-
         f->start = 0;
         f->end = f->size;
-        free(f->data);
-        f->data = new_data;
-    }
 
-    f->data[f->end] = item;
+        free(f->arr);
+        f->arr = newArray;
+    }
+    f->arr[f->end] = item;
     f->end = (f->end + 1) % f->allocated;
     f->size++;
 }
 
-void dequePushFront(Deque *f, dataType item)
-{
-
-    int idx_source;
-    int idx_dest;
-
-    if (f->size >= f->allocated)
-    {
+void dequePushFront(Deque *f, dataType item) {
+    if (f->size >= f->allocated) {
         f->allocated *= 2;
 
-        dataType *new_data = (dataType *)malloc(f->allocated * sizeof(dataType));
+        dataType *newArray = (dataType *)malloc(f->allocated * sizeof(dataType));
 
-        for (int i = 0; i < f->size; i++)
-        {
-            idx_source = (f->start + i) % f->size;
-            idx_dest = i;
-
-            new_data[idx_dest] = f->data[idx_source];
+        for (int i = 0; i < f->size; i++) {
+            int idx = (f->start + i) % f->size;
+            newArray[i] = f->arr[idx];
         }
-
         f->start = 0;
         f->end = f->size;
-        free(f->data);
-        f->data = new_data;
+
+        free(f->arr);
+        f->arr = newArray;
     }
 
     if (f->start - 1 < 0)
         f->start = f->allocated;
-
-    f->data[f->start - 1] = item;
+  
+    f->arr[f->start - 1] = item;
     f->start = (f->start - 1) % f->allocated;
     f->size++;
 }
 
-dataType dequePopBack(Deque *f)
-{
+int dequeSize(Deque *f) {
+    return f->size;
+}
 
-    if (f->end - 1 < 0)
+dataType dequePopBack(Deque *f) {
+    if (f->end - 1 < 0) 
         f->end = f->allocated;
-
-    dataType popped = f->data[f->end - 1];
+    
+    dataType popped = f->arr[f->end - 1];
     f->end = (f->end - 1) % f->allocated;
     f->size--;
     return popped;
 }
 
-dataType dequePopFront(Deque *f)
-{
-
-    dataType popped = f->data[f->start];
+dataType dequePopFront(Deque *f) {
+    dataType popped = f->arr[f->start];
     f->start = (f->start + 1) % f->allocated;
     f->size--;
     return popped;
 }
 
-void dequeDestroy(Deque *f)
-{
-
-    if (f)
-    {
-
-        int idx;
-
-        for (int i = 0; i < f->size; i++)
-        {
-            idx = (f->start + i) % f->allocated;
-            free(f->data[idx]);
+void dequeDestroy(Deque *f) {
+    if (f != NULL) {
+        if (f->arr != NULL) {
+            free(f->arr);
         }
-
-        free(f->data);
         free(f);
     }
-}
-
-int dequeSize(Deque *f)
-{
-    return f->size;
-}
-
-int dequeAllocated(Deque *f)
-{
-    return f->allocated;
 }

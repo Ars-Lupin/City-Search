@@ -19,17 +19,27 @@ struct tSource
 
 void doTheSearch(int idxSource, int idxDest, Vector *cities, int numCities, char *algorithm)
 {
-    if (!strcmp(algorithm, "DFS") || !strcmp(algorithm, "BFS"))
+    tSource *source = (tSource *)calloc(1, sizeof(tSource));
+    if (!strcmp(algorithm, "DFS"))
     {
-        tSource source;
-        strcpy(source.sourceAlgorithm, algorithm);
-        printf("deque");
+        strcpy(source->sourceAlgorithm, algorithm);
+        printf("%s", source->sourceAlgorithm);
+    }
+    if (!strcmp(algorithm, "BFS"))
+    {
+        strcpy(source->sourceAlgorithm, algorithm);
+        printf("%s", source->sourceAlgorithm);
     }
 
-    if (!strcmp(algorithm, "UCS") || !strcmp(algorithm, "A*"))
+    if (!strcmp(algorithm, "UCS"))
     {
-        tSource source;
-        strcpy(source.sourceAlgorithm, algorithm);
-        printf("heap");
+        strcpy(source->sourceAlgorithm, algorithm);
+        printf("%s", source->sourceAlgorithm);
+    }
+
+    if (!strcmp(algorithm, "A*"))
+    {
+        strcpy(source->sourceAlgorithm, algorithm);
+        printf("%s", source->sourceAlgorithm);
     }
 }

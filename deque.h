@@ -2,8 +2,7 @@
 #ifndef _DEQUE_H_
 #define _DEQUE_H_
 
-#include "vector.h"
-
+typedef void *dataType;
 typedef struct Deque Deque;
 
 Deque *dequeConstruct();

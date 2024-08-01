@@ -18,10 +18,9 @@ int main(int argc, char **argv)
 
     char directory[MAX_TAM_DIRECTORY];
     char input[MAX_TAM_DIRECTORY];
-    sprintf(directory, "%s", argv[1]);
-    sprintf(input, "input.txt");
-    // strcpy(input, "template-TP-1-etapa-1/Casos/01");
-    // FILE *arq = fopen(directory, "r");
+    sprintf(input, "%s", argv[1]);
+    // sprintf(input, "input.txt");
+
     FILE *arq = fopen(input, "r");
 
     if (!arq)
