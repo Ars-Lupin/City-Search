@@ -9,17 +9,11 @@
 #define MAX_LENGTH_NAME 30
 #define MAX_TAM_DIRECTORY 1001
 
-int main(int argc, char **argv)
+int main()
 {
-
-    // Read directory name
-    if (argc < 2)
-        exit(printf("ERRO: local dos arquivos não informado"));
-
-    char directory[MAX_TAM_DIRECTORY];
     char input[MAX_TAM_DIRECTORY];
-    sprintf(input, "%s", argv[1]);
-    // sprintf(input, "input.txt");
+    scanf("%s", input);
+    getchar();
 
     FILE *arq = fopen(input, "r");
 
@@ -29,11 +23,9 @@ int main(int argc, char **argv)
     char algorithm[MAX_LENGTH_NAME];
     int numCities, idxSource, idxDest;
 
-    fscanf(arq, "%s", algorithm);
-    fscanf(arq, "%d %d", &idxSource, &idxDest);
+    fscanf(arq, "%s\n", algorithm);
+    fscanf(arq, "%d %d\n", &idxSource, &idxDest);
     fscanf(arq, "%d", &numCities);
-
-    // printf("%s %d %d %d\n", algorithm, idxSource, idxDest, numCities);
 
     Vector *cities = vectorConstruct();
     char cityName[MAX_LENGTH_NAME];

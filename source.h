@@ -8,5 +8,6 @@ typedef struct tSource tSource;
 
 void doTheSearch(int idxSource, int idxDest, Vector* cities, int numCities, char* algorithm);
 
+tSource* sourceConstruction(int idxSource, int idxDest, Vector* cities, int numCities, char* algorithm);
 
 #endif

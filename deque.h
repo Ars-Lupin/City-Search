@@ -2,6 +2,8 @@
 #ifndef _DEQUE_H_
 #define _DEQUE_H_
 
+#include <stdbool.h>
+
 typedef void *dataType;
 typedef struct Deque Deque;
 
@@ -12,6 +14,8 @@ void *dequePopBack(Deque *f);
 void *dequePopFront(Deque *f);
 void dequeDestroy(Deque *f);
 int dequeSize(Deque *f);
-int dequeAllocated(Deque *f);
+bool dequeIsEmpty(Deque *f);
+void printDeque(Deque *f);
+
 
 #endif

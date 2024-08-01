@@ -1,17 +1,17 @@
 CC=gcc
-CFLAGS= -g
-DEPS=city.h neighbor.h source.h vector.h 
-OBJ=main.o city.o neighbor.o source.o vector.o 
+CFLAGS= -g -Wall -lm
+DEPS= $(wildcard *.h)
+OBJ= $(patsubst %.c,%.o,$(wildcard *.c))
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 principal: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
-	echo "Compilado!"
+	@echo "Compilado!"
 
 clear:
 	rm -rf *.o principal
 
-run:
+run: principal
 	./principal
