@@ -26,6 +26,7 @@ struct tSource
 
 void doTheSearch(int idxSource, int idxDest, Vector *cities, int numCities, char *algorithm)
 {
+    int findCity = 0;
     tSource *source = sourceConstruction(idxSource, idxDest, cities, numCities, algorithm);
     if (!strcmp(algorithm, "DFS"))
     {
@@ -64,6 +65,7 @@ void doTheSearch(int idxSource, int idxDest, Vector *cities, int numCities, char
 
             if (compareCities(getName(currentCity), getName(getInitialCity(cities, idxDest))))
             {
+                findCity = 1;
 
                 Deque *pathDeque = dequeConstruct();
                 tCity *traceCity = currentCity;
@@ -166,6 +168,7 @@ void doTheSearch(int idxSource, int idxDest, Vector *cities, int numCities, char
 
             if (compareCities(getName(currentCity), getName(getInitialCity(cities, idxDest))))
             {
+                findCity = 1;
                 tCity *traceCity = currentCity;
                 while (traceCity != NULL)
                 {
@@ -279,6 +282,7 @@ void doTheSearch(int idxSource, int idxDest, Vector *cities, int numCities, char
 
             if (compareCities(getName(currentCity), getName(getInitialCity(cities, idxDest))))
             {
+                findCity = 1;
                 Deque *pathDeque = dequeConstruct();
                 tCity *traceCity = currentCity;
                 while (traceCity != NULL)
@@ -348,6 +352,10 @@ void doTheSearch(int idxSource, int idxDest, Vector *cities, int numCities, char
             printf("%s", source->sourceAlgorithm);
         }
         destroySource(source);
+        if(findCity == 0){
+            printf("IMPOSSIVEL");
+        }
+
     }
 
     tSource *sourceConstruction(int idxSource, int idxDest, Vector *cities, int numCities, char *algorithm)
