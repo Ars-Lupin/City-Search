@@ -124,3 +124,13 @@ tCity *getInitialCity(Vector *cities, int idxSource)
 {
     return vectorGet(cities, idxSource);
 }
+
+void distanceOrigin(tCity *city, float distance)
+{
+    city->distanceOrigin = distance;
+}
+
+float getDistanceOrigin(tCity *city)
+{
+    return city->distanceOrigin;
+}

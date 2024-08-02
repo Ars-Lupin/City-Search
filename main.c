@@ -54,7 +54,6 @@ int main()
     }
 
     doTheSearch(idxSource, idxDest, cities, numCities, algorithm);
-    printf("FEZ A PESQUISA\n");
 
     fclose(arq);
     return 0;

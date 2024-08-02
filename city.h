@@ -22,6 +22,7 @@ bool compareCitiesByDistance(const void *a, const void *b);
 void cityDestroy(tCity *city);
 
 tCity *getInitialCity(Vector *cities, int idxSource);
-
+void distanceOrigin(tCity *city, float distance);
+float getDistanceOrigin(tCity *city);
 
 #endif
