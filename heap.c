@@ -4,10 +4,10 @@
 struct Heap
 {
     Vector *v;
-    bool (*cmpFn)(dataType, dataType);
+    int (*cmpFn)(const void *, const void *);
 };
 
-Heap *heapConstruct(bool (*cmpFn)(dataType, dataType))
+Heap *heapConstruct(int (*cmpFn)(const void *, const void *))
 {
     Heap *heap = (Heap *)malloc(sizeof(Heap));
     heap->v = vectorConstruct();
@@ -16,8 +16,9 @@ Heap *heapConstruct(bool (*cmpFn)(dataType, dataType))
     return heap;
 }
 
-void heapPush(Heap *heap, dataType data)
+void heapPush(void *h, dataType data)
 {
+    Heap *heap = (Heap *)h;
     vectorPushBack(heap->v, data);
 
     int idx = vectorSize(heap->v) - 1;
@@ -38,8 +39,9 @@ void heapPush(Heap *heap, dataType data)
     }
 }
 
-void *heapPop(Heap *heap)
+void *heapPop(void *h)
 {
+    Heap *heap = (Heap *)h;
     int idx = 0, min = 0;
 
     if (vectorSize(heap->v) >= 2)
@@ -97,14 +99,16 @@ void heapDestroy(Heap *heap, void (*destroyDataType)(dataType))
     }
 }
 
-bool heapIsEmpty(Heap *heap)
+int heapIsEmpty(void *h)
 {
+    Heap *heap = (Heap *)h;
     if (vectorSize(heap->v) == 0)
     {
-        return true;
+        return 1;
     }
     else
     {
-        return false;
+        return 0;
     }
 }
+

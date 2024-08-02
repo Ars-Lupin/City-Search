@@ -75,7 +75,7 @@ void pushNeighbor(tCity *city, void *neighbor)
     vectorPushBack(city->neighbors, neighbor);
 }
 
-bool compareCities(const void *a, const void *b)
+int compareCities(const void *a, const void *b)
 {
 
     const tCity *cityA = (const tCity *)a;
@@ -83,28 +83,29 @@ bool compareCities(const void *a, const void *b)
 
     if (!strcmp(cityA->name, cityB->name))
     {
-        return true;
+        return 1;
     }
 
-    return false;
+    return 0;
 }
 
-bool compareCitiesByDistance(const void *a, const void *b)
+int compareCitiesByDistance(const void *a, const void *b)
 {
 
     const tCity *cityA = (const tCity *)a;
     const tCity *cityB = (const tCity *)b;
 
-    if (cityA->distanceOrigin > cityB->distanceOrigin);
+    if (cityA->distanceOrigin > cityB->distanceOrigin)
     {
-        return true;
+        return 1;
     }
 
-    return false;
+    return 0;
 }
 
-void cityDestroy(tCity *city)
+void cityDestroy(void *c)
 {
+    tCity *city = (tCity *)c;
     int i;
     if (city)
     {

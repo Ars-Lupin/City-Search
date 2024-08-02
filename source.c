@@ -21,7 +21,7 @@ struct tSource
     void *structure;
     void (*push)(void *structure, void *element);
     void *(*pop)(void *structure);
-    bool (*is_empty)(void *structure);
+    int (*is_empty)(void *structure);
 };
 
 void doTheSearch(int idxSource, int idxDest, Vector *cities, int numCities, char *algorithm)
@@ -385,6 +385,7 @@ void doTheSearch(int idxSource, int idxDest, Vector *cities, int numCities, char
             source->pop = heapPop;
             source->is_empty = heapIsEmpty;
         }
+        return source;
     }
 
     void destroySource(tSource * source)

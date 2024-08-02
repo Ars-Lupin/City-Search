@@ -8,14 +8,15 @@ typedef void *dataType;
 typedef struct Deque Deque;
 
 Deque *dequeConstruct();
-void dequePushBack(Deque *f, dataType item);
-void dequePushFront(Deque *f, dataType item);
-void *dequePopBack(Deque *f);
-void *dequePopFront(Deque *f);
+void dequePushBack(void *f, dataType item);
+void dequePushFront(void *f, dataType item);
+void *dequePopBack(void *f);
+void *dequePopFront(void *f);
 void dequeDestroy(Deque *f);
 int dequeSize(Deque *f);
-bool dequeIsEmpty(Deque *f);
+int dequeIsEmpty(void *f);
 void printDeque(Deque *f);
+
 
 
 #endif

@@ -17,9 +17,9 @@ int getNumNeighbors(tCity *city);
 void *getNeighbor(tCity *city, int idx);
 void pushNeighbor(tCity *city, void *neighbor);
 
-bool compareCities(const void *a, const void *b);
-bool compareCitiesByDistance(const void *a, const void *b);
-void cityDestroy(tCity *city);
+int compareCities(const void *a, const void *b);
+int compareCitiesByDistance(const void *a, const void *b);
+void cityDestroy(void *c);
 
 tCity *getInitialCity(Vector *cities, int idxSource);
 void distanceOrigin(tCity *city, float distance);

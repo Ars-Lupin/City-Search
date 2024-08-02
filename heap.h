@@ -8,11 +8,10 @@ typedef void *dataType;
 
 typedef struct Heap Heap;
 
-Heap *heapConstruct(bool (*cmpFn)(dataType, dataType));
-void heapPush(Heap *heap, dataType data);
-void *heapPop(Heap *heap);
+Heap *heapConstruct(int (*cmpFn)(const void *, const void *));
+void heapPush(void *h, dataType data);
+void *heapPop(void *h);
 int heapSize(Heap *heap);
 void heapDestroy(Heap *heap, void (*destroyDataType)(dataType));
-bool heapIsEmpty(Heap *heap);
-
+int heapIsEmpty(void *h);
 #endif 

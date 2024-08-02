@@ -8,7 +8,6 @@ OBJ= $(patsubst %.c,%.o,$(wildcard *.c))
 
 principal: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
-	@echo "Compilado!"
 
 clear:
 	rm -rf *.o principal
