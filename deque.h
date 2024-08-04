@@ -3,6 +3,7 @@
 #define _DEQUE_H_
 
 #include <stdbool.h>
+#include <string.h>
 
 typedef void *dataType;
 typedef struct Deque Deque;
@@ -16,6 +17,7 @@ void dequeDestroy(Deque *f);
 int dequeSize(Deque *f);
 int dequeIsEmpty(void *f);
 void printDeque(Deque *f);
+int dequeFind(Deque *f, dataType item, int(*eq_name)(void*,void*));
 
 
 

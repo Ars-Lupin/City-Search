@@ -1,13 +1,15 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "heap.h"
+
 
 struct Heap
 {
     Vector *v;
-    int (*cmpFn)(const void *, const void *);
+    int (*cmpFn)(void *, void *);
 };
 
-Heap *heapConstruct(int (*cmpFn)(const void *, const void *))
+Heap *heapConstruct(int (*cmpFn)(void *, void *))
 {
     Heap *heap = (Heap *)malloc(sizeof(Heap));
     heap->v = vectorConstruct();
@@ -27,7 +29,7 @@ void heapPush(void *h, dataType data)
     {
         int idxFather = (idx - 1) / 2;
 
-        if (heap->cmpFn(data, vectorGet(heap->v, idxFather)))
+        if (!heap->cmpFn(data, vectorGet(heap->v, idxFather)))
         {
             vectorSwap(heap->v, idx, idxFather);
             idx = idxFather;
@@ -58,13 +60,13 @@ void *heapPop(void *h)
         int rightChild = 2 * idx + 2;
 
         if ((leftChild < vectorSize(heap->v)) &&
-            (heap->cmpFn(vectorGet(heap->v, leftChild), vectorGet(heap->v, min))))
+            (!heap->cmpFn(vectorGet(heap->v, leftChild), vectorGet(heap->v, min))))
         {
             min = leftChild;
         }
 
         if ((rightChild < vectorSize(heap->v)) &&
-            (heap->cmpFn(vectorGet(heap->v, rightChild), vectorGet(heap->v, min))))
+            (!heap->cmpFn(vectorGet(heap->v, rightChild), vectorGet(heap->v, min))))
         {
             min = rightChild;
         }
@@ -87,13 +89,13 @@ int heapSize(Heap *heap)
     return vectorSize(heap->v);
 }
 
-void heapDestroy(Heap *heap, void (*destroyDataType)(dataType))
+void heapDestroy(Heap *heap)
 {
     if (heap != NULL)
     {
         if (heap->v != NULL)
         {
-            vectorDestroy(heap->v, destroyDataType);
+            vectorDestroy(heap->v);
         }
         free(heap);
     }
@@ -112,3 +114,45 @@ int heapIsEmpty(void *h)
     }
 }
 
+void printSpaces(int count) {
+    int i;
+    for ( i = 0; i < count; i++) {
+        printf("  ");
+    }
+}
+
+void heapPrint(Heap *f) {
+    int size = vectorSize(f->v);
+    if (size == 0) {
+        printf("Heap is empty.\n");
+        return;
+    }
+
+    int levels = (int)log2(size) + 1; // Calcula o número de níveis na heap
+    int maxWidth = (1 << levels) - 1; // Largura máxima da última linha
+
+    int currentLevel = 0;
+    int elementsInLevel = 1;
+    int index = 0, i;
+
+    while (index < size) {
+        int spaceBetweenElements = (maxWidth / elementsInLevel) / 2;
+
+        if (currentLevel == 0) {
+            printSpaces(spaceBetweenElements);
+        }
+
+        for ( i = 0; i < elementsInLevel && index < size; i++) {
+            printf("|%s|", getName(vectorGet(f->v, index)));
+            index++;
+            if (i < elementsInLevel - 1) {
+                printSpaces(spaceBetweenElements * 2 - 1);
+            }
+        }
+
+        printf("\n");
+        currentLevel++;
+        elementsInLevel *= 2;
+        printSpaces(spaceBetweenElements / 2);
+    }
+}

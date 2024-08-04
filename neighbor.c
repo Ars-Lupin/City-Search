@@ -13,7 +13,7 @@ struct tNeighbor
     int idx;
 };
 
-tNeighbor *neighborConstructor(int idx, int distance)
+tNeighbor *neighborConstructor(int idx, float distance)
 {
 
     tNeighbor *neighbor = (tNeighbor *)calloc(1, sizeof(tNeighbor));

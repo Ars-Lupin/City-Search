@@ -3,7 +3,7 @@
 
 typedef struct tNeighbor tNeighbor;
 
-tNeighbor *neighborConstructor(int idx, int distance);
+tNeighbor *neighborConstructor(int idx, float distance);
 float getDistance(tNeighbor *n);
 int getNeighborIdx(tNeighbor *n);
 void neighborDestroy(tNeighbor *n);

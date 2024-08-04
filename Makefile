@@ -13,4 +13,4 @@ clear:
 	rm -rf *.o principal
 
 run: principal
-	./principal
+	@valgrind --leak-check=full ./principal

@@ -49,7 +49,7 @@ int vectorBinarySearch(Vector *v, dataType val);
 void vectorReverse(Vector *v);
 
 // Libera a memoria alocada para o vetor
-void vectorDestroy(Vector *v, void (*destroyDataType)(dataType));
+void vectorDestroy(Vector *v);
 
 dataType vectorMax(Vector *v, int cmp(const void *, const void *));
 

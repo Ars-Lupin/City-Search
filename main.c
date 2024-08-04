@@ -4,6 +4,7 @@
 #include "city.h"
 #include "neighbor.h"
 #include "source.h"
+#include <string.h>
 
 // Constants
 #define MAX_LENGTH_NAME 30
@@ -36,7 +37,7 @@ int main()
     for (i = 0; i < numCities; i++)
     {
         fscanf(arq, "\n%s %f %f %d", cityName, &coordX, &coordY, &numNeighbors);
-        tCity *city = cityConstructor(cityName, coordX, coordY, numNeighbors);
+        tCity *city = cityConstructor(cityName, coordX, coordY, numNeighbors, i);
 
         for (j = 0; j < numNeighbors; j++)
         {
@@ -53,7 +54,16 @@ int main()
         vectorPushBack(cities, city);
     }
 
-    doTheSearch(idxSource, idxDest, cities, numCities, algorithm);
+    int(*cmp)(void*, void*);
+    
+    if (!strcmp(algorithm, "UCS")) {
+        cmp = compareCitiesByDistance;
+    }
+    else {
+        cmp = compareCitiesByHeuristic;
+    }
+
+    doTheSearch(idxSource, idxDest, cities, numCities, algorithm, cmp);
 
     fclose(arq);
     return 0;

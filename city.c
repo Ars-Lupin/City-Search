@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "city.h"
-#include "neighbor.h"
+
 
 // Constants
 #define MAX_LENGTH_NAME 30
@@ -14,12 +14,14 @@ struct tCity
     char name[MAX_LENGTH_NAME];
     float x;
     float y;
+    int idx;
     float distanceOrigin;
+    float distanceHeuristic;
     int numNeighbors;
     Vector *neighbors;
 };
 
-tCity *cityConstructor(char *name, int x, int y, int numNeighbors)
+tCity *cityConstructor(char *name, int x, int y, int numNeighbors, int idx)
 {
 
     tCity *city = (tCity *)calloc(1, sizeof(tCity));
@@ -36,6 +38,7 @@ tCity *cityConstructor(char *name, int x, int y, int numNeighbors)
     city->x = x;
     city->y = y;
     city->numNeighbors = numNeighbors;
+    city->idx = idx;
 
     return city;
 }
@@ -44,6 +47,11 @@ const char *getName(tCity *city)
 {
 
     return (city->name);
+}
+
+int getIdx(tCity *city)
+{
+    return (city->idx);
 }
 
 float getCoordenateX(tCity *city)
@@ -62,6 +70,11 @@ int getNumNeighbors(tCity *city)
 {
 
     return (city->numNeighbors);
+}
+
+Vector *getNeighbors(tCity *city)
+{
+    return city->neighbors;
 }
 
 void *getNeighbor(tCity *city, int idx)
@@ -89,11 +102,22 @@ int compareCities(const void *a, const void *b)
     return 0;
 }
 
-int compareCitiesByDistance(const void *a, const void *b)
+int compareCity(tCity *cityA, void *dequeCity)
+{
+    tCity *cityB = (tCity *)dequeCity;
+    if (!strcmp(cityA->name, cityB->name))
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
+int compareCitiesByDistance(void *a, void *b)
 {
 
-    const tCity *cityA = (const tCity *)a;
-    const tCity *cityB = (const tCity *)b;
+    tCity *cityA = ( tCity *)a;
+    tCity *cityB = ( tCity *)b;
 
     if (cityA->distanceOrigin > cityB->distanceOrigin)
     {
@@ -102,6 +126,17 @@ int compareCitiesByDistance(const void *a, const void *b)
 
     return 0;
 }
+
+int compareCitiesByHeuristic(void *a, void *b) {
+    tCity *cityA = (tCity *)a;
+    tCity *cityB = (tCity *)b;
+
+    if ((cityA->distanceOrigin + cityA->distanceHeuristic) > (cityB->distanceOrigin + cityB->distanceHeuristic)) {
+        return 1;   
+    }
+    return 0;
+}
+
 
 void cityDestroy(void *c)
 {
@@ -116,10 +151,11 @@ void cityDestroy(void *c)
             neighborDestroy(neighborPopped);
         }
 
-        vectorDestroy(city->neighbors, (void *)neighborDestroy);
+        vectorDestroy(city->neighbors);
         free(city);
     }
 }
+
 
 tCity *getInitialCity(Vector *cities, int idxSource)
 {
@@ -131,7 +167,22 @@ void distanceOrigin(tCity *city, float distance)
     city->distanceOrigin = distance;
 }
 
+void distanceHeuristic(tCity *city, tCity *destCity)
+{
+    city->distanceHeuristic = heuristic(city, destCity);
+}
+
+float getDistanceHeuristic(tCity *city)
+{
+    return city->distanceHeuristic;
+}
+
 float getDistanceOrigin(tCity *city)
 {
     return city->distanceOrigin;
+}
+
+float heuristic(tCity *cityA, tCity *cityB)
+{
+   return sqrt(pow(cityA->x - cityB->x, 2) + pow(cityA->y - cityB->y, 2));
 }

@@ -90,18 +90,9 @@ int vectorFind(Vector *v, dataType val, int cmp(const void *, const void *))
     return -1;
 }
 
-void vectorDestroy(Vector *v, void (*destroyDataType)(dataType))
-{
-    int i;
-    if (v)
-    {
-        if (v->data)
-        {
-            for (i = 0; i < vectorSize(v); i++)
-            {
-                if (v->data[i])
-                    destroyDataType(v->data[i]);
-            }
+void vectorDestroy(Vector *v) {
+    if (v != NULL) {
+        if (v->data != NULL) {
             free(v->data);
         }
         free(v);
