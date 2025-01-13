@@ -2,7 +2,7 @@
 
 Este projeto é uma ferramenta de exploração de grafos projetada para simular a experiência de encontrar caminhos entre cidades usando vários algoritmos de busca. Ele demonstra implementações de DFS, BFS, UCS e A\* para resolver problemas de travessia de grafos de forma eficiente.
 
-![Grafo](imagens/image-grafo.png)
+![City Search](image/image-graph.png)
 
 ## Funcionalidades
 
